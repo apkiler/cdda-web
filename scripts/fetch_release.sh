@@ -19,8 +19,8 @@ cd "$SOURCE_DIR"
 
 if [ "$RELEASE_TAG" = "latest" ]; then
   echo "Fetching latest stable Ito release..."
-  # Get the latest stable Ito tag
-  LATEST_TAG=$(git ls-remote --tags https://github.com/${CDDA_REPO}.git | grep -E 'refs/tags/cdda-0\.I-[0-9]{4}-[0-9]{2}-[0-9]{2}$' | sort -V | tail -n1 | sed 's/.*\///')
+  # Get the latest stable Ito tag (simple format like 0.I)
+  LATEST_TAG=$(git ls-remote --tags https://github.com/${CDDA_REPO}.git | grep -E 'refs/tags/0\.[A-Z]$' | sort -V | tail -n1 | sed 's/.*\///')
   echo "Latest stable Ito tag: $LATEST_TAG"
   RELEASE_TAG="$LATEST_TAG"
 fi

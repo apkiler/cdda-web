@@ -28,15 +28,15 @@ There are two ways to trigger a build:
 #### Option A: Using Tags (Recommended)
 ```bash
 # Create and push a tag to trigger the workflow
-git tag cdda-0.I-2026-06-06
-git push origin cdda-0.I-2026-06-06
+git tag 0.I
+git push origin 0.I
 ```
 
 #### Option B: Manual Workflow Dispatch
 1. Go to **Actions** tab in your repository
 2. Select **CDDA WebAssembly Build** workflow
 3. Click **Run workflow**
-4. Enter the release tag (e.g., `cdda-0.I-2026-06-06` or `latest`)
+4. Enter the release tag (e.g., `0.I` for stable Ito or `latest`)
 
 ### 3. Access Your Build
 
@@ -89,21 +89,21 @@ To change build options, edit the environment variables in `.github/workflows/cd
 ### Option 1: Latest Stable Release
 Use the automatic latest detection:
 ```bash
-git tag cdda-latest-$(date +%Y%m%d)
-git push origin cdda-latest-$(date +%Y%m%d)
+git tag latest-$(date +%Y%m%d)
+git push origin latest-$(date +%Y%m%d)
 ```
 
 ### Option 2: Specific Release
 Tag with the specific release version:
 ```bash
-git tag cdda-0.I-2026-06-06
-git push origin cdda-0.I-2026-06-06
+git tag 0.I
+git push origin 0.I
 ```
 
 ### Option 3: Manual Dispatch
 1. Go to **Actions** → **CDDA WebAssembly Build**
 2. Click **Run workflow**
-3. Enter the specific tag (e.g., `cdda-0.I-2026-06-06`)
+3. Enter the specific tag (e.g., `0.I`)
 
 ## 🛠️ Local Development
 
@@ -124,7 +124,7 @@ source emsdk_env.sh
 # Run build scripts
 cd cdda-web
 chmod +x scripts/*.sh
-./scripts/fetch_release.sh "cdda-0.I-2026-06-06"
+./scripts/fetch_release.sh "0.I"
 ./scripts/build_web.sh
 ./scripts/package_web.sh
 ```
