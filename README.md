@@ -4,8 +4,9 @@ This repository contains the GitHub Actions workflow and scripts to build Catacl
 
 ## 📋 Overview
 
-This project automatically builds CDDA WebAssembly using Emscripten via GitHub Actions and deploys it to GitHub Pages. The build includes:
+This project automatically builds CDDA WebAssembly using the official CDDA Emscripten build scripts via GitHub Actions and deploys it to GitHub Pages. The build uses CDDA's built-in WebAssembly support:
 
+- **Official build scripts**: Uses CDDA's `build-scripts/build-emscripten.sh`
 - **Tiles support**: Full graphical interface
 - **Sound support**: Audio playback enabled
 - **English-only**: No localization (smaller build size)
@@ -128,6 +129,8 @@ chmod +x scripts/*.sh
 ./scripts/build_web.sh
 ./scripts/package_web.sh
 ```
+
+Note: The build uses CDDA's official Emscripten build scripts, which require the source code to have the necessary build infrastructure.
 
 ## 📊 Build Artifacts
 
