@@ -18,9 +18,11 @@ echo "  Tiles: $BUILD_TILES"
 echo "  Sound: $BUILD_SOUND"
 echo "  Localization: $BUILD_LOCALIZATION"
 
-# Use absolute path for source directory
+# Use absolute paths for both source and output directories
 SOURCE_ABS_PATH="$(pwd)/$SOURCE_DIR"
+OUTPUT_ABS_PATH="$(pwd)/$OUTPUT_DIR"
 echo "Source directory: $SOURCE_ABS_PATH"
+echo "Output directory: $OUTPUT_ABS_PATH"
 
 # Verify source directory exists
 if [ ! -d "$SOURCE_ABS_PATH" ]; then
@@ -29,7 +31,7 @@ if [ ! -d "$SOURCE_ABS_PATH" ]; then
 fi
 
 # Create output directory
-mkdir -p "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_ABS_PATH"
 
 # Change to CDDA source directory and use official build scripts
 cd "$SOURCE_ABS_PATH"
@@ -51,33 +53,33 @@ CCACHE=0 make -j4 NATIVE=emscripten BACKTRACE=0 TILES=1 TESTS=0 RUNTESTS=0 RELEA
 # Copy the generated WebAssembly files to output directory
 echo "Copying WebAssembly output files..."
 if [ -f "cataclysm-tiles.js" ]; then
-  cp cataclysm-tiles.js "$OUTPUT_DIR/"
+  cp cataclysm-tiles.js "$OUTPUT_ABS_PATH/"
 fi
 if [ -f "cataclysm-tiles.wasm" ]; then
-  cp cataclysm-tiles.wasm "$OUTPUT_DIR/"
+  cp cataclysm-tiles.wasm "$OUTPUT_ABS_PATH/"
 fi
 if [ -f "cataclysm-tiles.data" ]; then
-  cp cataclysm-tiles.data "$OUTPUT_DIR/"
+  cp cataclysm-tiles.data "$OUTPUT_ABS_PATH/"
 fi
 if [ -f "cataclysm-tiles.data.js" ]; then
-  cp cataclysm-tiles.data.js "$OUTPUT_DIR/"
+  cp cataclysm-tiles.data.js "$OUTPUT_ABS_PATH/"
 fi
 
 # Copy data directory (for runtime assets)
 echo "Copying data directory..."
 if [ -d "data" ]; then
-  cp -r data "$OUTPUT_DIR/"
+  cp -r data "$OUTPUT_ABS_PATH/"
 fi
 
 # Copy lang directory if localization is enabled
 if [ "$BUILD_LOCALIZATION" = "true" ] && [ -d "lang" ]; then
-  cp -r lang "$OUTPUT_DIR/"
+  cp -r lang "$OUTPUT_ABS_PATH/"
 fi
 
 # Copy sound directory if sound is enabled
 if [ "$BUILD_SOUND" = "true" ] && [ -d "sound" ]; then
-  cp -r sound "$OUTPUT_DIR/"
+  cp -r sound "$OUTPUT_ABS_PATH/"
 fi
 
 echo "Build completed successfully!"
-echo "Web output prepared in: $OUTPUT_DIR"
+echo "Web output prepared in: $OUTPUT_ABS_PATH"
