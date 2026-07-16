@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - '0.*'
+      - '0.*-build*'
   workflow_dispatch:
     inputs:
       release_tag:
