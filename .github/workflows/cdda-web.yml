@@ -12,6 +12,9 @@ on:
         required: true
         default: 'latest'
 
+permissions:
+  contents: write
+
 env:
   EMSCRIPTEN_VERSION: '3.1.51'
   CDDA_REPO: 'CleverRaven/cataclysm-dda'
@@ -46,6 +49,11 @@ jobs:
             echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
           fi
           echo "Building CDDA release: ${{ steps.get_tag.outputs.tag }}"
+          
+          # Extract base tag for cache (e.g., 0.I-build2 -> 0.I)
+          BASE_TAG=$(echo "${{ steps.get_tag.outputs.tag }}" | sed 's/-build.*//')
+          echo "base_tag=$BASE_TAG" >> $GITHUB_OUTPUT
+          echo "Base tag for cache: $BASE_TAG"
 
       - name: Cache Emscripten
         uses: actions/cache@v4
@@ -75,9 +83,9 @@ jobs:
           path: |
             build-cache
             cdda-source
-          key: cdda-build-${{ steps.get_tag.outputs.tag }}-${{ env.BUILD_TYPE }}-${{ env.BUILD_TILES }}-${{ env.BUILD_SOUND }}
+          key: cdda-build-${{ steps.get_tag.outputs.base_tag }}-${{ env.BUILD_TYPE }}-${{ env.BUILD_TILES }}-${{ env.BUILD_SOUND }}-${{ runner.os }}
           restore-keys: |
-            cdda-build-${{ steps.get_tag.outputs.tag }}-
+            cdda-build-${{ steps.get_tag.outputs.base_tag }}-
 
       - name: Fetch CDDA release
         run: |
